@@ -2,7 +2,7 @@
 # frozen_string_literal: true
 
 BUILD_ONLY = false
-GIT_TAG = "v0.0.5"
+GIT_TAG = "v0.0.9"
 
 COMMON_CHAIN_NAME = "khala"
 COMMON_TAG = GIT_TAG
@@ -14,7 +14,7 @@ NODE_GIT_TAG = GIT_TAG
 REGISTRIES = [
   "jasl123",
   "phalanetwork",
-  "swr.cn-east-3.myhuaweicloud.com/khala",
+  "swr.cn-east-3.myhuaweicloud.com/phala",
   "docker.pkg.github.com/phala-network/khala-docker"
 ]
 

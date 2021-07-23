@@ -21,7 +21,7 @@ case ${NODE_ROLE} in
     ;;
 esac
 
-echo "Starting PhalaNode as role '${NODE_ROLE}' with extra opts '${EXTRA_OPTS}'"
+echo "Starting Khala node as role '${NODE_ROLE}' with extra opts '${EXTRA_OPTS}'"
 
 ./khala-node \
   --chain "${CHAIN}" \
