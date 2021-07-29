@@ -1,18 +1,35 @@
 #!/bin/bash
 
-CHAIN="khala"
+WORK_PATH=$(dirname $(readlink -f "$0"))
+DATA_PATH="$HOME/data"
+
 NODE_NAME="${NODE_NAME:-"khala-node"}"
 NODE_ROLE="${NODE_ROLE:-""}"
 
+PARACHAIN="khala"
+RELAYCHAIN="kusama"
+
 case ${NODE_ROLE} in
   "")
-    NODE_ROLE_ARGS=""
+    echo "You must set NODE_ROLE env"
+    echo "accept values (case sensitive): <Empty> | FULL | VALIDATOR"
+    exit 1
     ;;
   "FULL")
-    NODE_ROLE_ARGS="--pruning archive --rpc-methods Unsafe"
+    PARACHAIN_ROLE_ARGS=""
+    RELAYCHAIN_ROLE_ARGS=""
     ;;
-  "VALIDATOR")
-    NODE_ROLE_ARGS="--collator --rpc-methods Unsafe"
+  "ARCHIVE")
+    PARACHAIN_ROLE_ARGS="--pruning archive"
+    RELAYCHAIN_ROLE_ARGS=""
+    ;;
+  "COLLATOR")
+    PARACHAIN_ROLE_ARGS="--collator"
+    RELAYCHAIN_ROLE_ARGS=""
+    ;;
+  "MINER")
+    PARACHAIN_ROLE_ARGS="--pruning archive --rpc-methods Unsafe"
+    RELAYCHAIN_ROLE_ARGS="--pruning archive --rpc-methods Unsafe"
     ;;
   *)
     echo "Unknown NODE_ROLE ${NODE_ROLE}"
@@ -21,20 +38,31 @@ case ${NODE_ROLE} in
     ;;
 esac
 
-echo "Starting Khala node as role '${NODE_ROLE}' with extra opts '${EXTRA_OPTS}'"
+echo "Starting Khala node as role '${NODE_ROLE}' with extra parachain args '${PARACHAIN_EXTRA_ARGS}' extra relaychain args '${RELAYCHAIN_EXTRA_ARGS}'"
 
-./khala-node \
-  --chain "${CHAIN}" \
-  --base-path "${HOME}/data" \
-  --name "${NODE_NAME}" \
+$WORK_PATH/khala-node \
+  --chain $PARACHAIN \
+  --base-path $DATA_PATH \
+  --name $NODE_NAME \
   --port 30333 \
+  --prometheus-port 9615 \
   --rpc-port 9933 \
   --ws-port 9944 \
   --ws-external \
   --prometheus-external \
   --rpc-external \
   --rpc-cors all \
-  $NODE_ROLE_ARGS \
-  $EXTRA_OPTS \
+  $PARACHAIN_ROLE_ARGS \
+  $PARACHAIN_EXTRA_ARGS \
   -- \
-  --port 30334
+  --chain $RELAYCHAIN \
+  --port 30334 \
+  --prometheus-port 9616 \
+  --rpc-port 9934 \
+  --ws-port 9945 \
+  --ws-external \
+  --prometheus-external \
+  --rpc-external \
+  --rpc-cors all \
+  $RELAYCHAIN_ROLE_ARGS \
+  $RELAYCHAIN_EXTRA_ARGS
