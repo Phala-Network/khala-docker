@@ -2,7 +2,7 @@
 # frozen_string_literal: true
 
 BUILD_ONLY = false
-GIT_TAG = "v0.0.9"
+GIT_TAG = "v0.0.10"
 
 COMMON_CHAIN_NAME = "khala"
 COMMON_TAG = GIT_TAG

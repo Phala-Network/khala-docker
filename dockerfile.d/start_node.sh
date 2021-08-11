@@ -12,7 +12,7 @@ RELAYCHAIN="kusama"
 case ${NODE_ROLE} in
   "")
     echo "You must set NODE_ROLE env"
-    echo "accept values (case sensitive): <Empty> | FULL | VALIDATOR"
+    echo "accept values (case sensitive): <Empty> | FULL | ARCHIVE | COLLATOR | MINER"
     exit 1
     ;;
   "FULL")
@@ -28,12 +28,12 @@ case ${NODE_ROLE} in
     RELAYCHAIN_ROLE_ARGS=""
     ;;
   "MINER")
-    PARACHAIN_ROLE_ARGS="--pruning archive --rpc-methods Unsafe"
-    RELAYCHAIN_ROLE_ARGS="--pruning archive --rpc-methods Unsafe"
+    PARACHAIN_ROLE_ARGS="--pruning archive --ws-external --rpc-external --rpc-cors all --rpc-methods Unsafe"
+    RELAYCHAIN_ROLE_ARGS="--pruning archive --ws-external --rpc-external --rpc-cors all --rpc-methods Unsafe"
     ;;
   *)
     echo "Unknown NODE_ROLE ${NODE_ROLE}"
-    echo "accept values (case sensitive): <Empty> | FULL | VALIDATOR"
+    echo "accept values (case sensitive): <Empty> | FULL | ARCHIVE | COLLATOR | MINER"
     exit 1
     ;;
 esac
@@ -48,10 +48,7 @@ $WORK_PATH/khala-node \
   --prometheus-port 9615 \
   --rpc-port 9933 \
   --ws-port 9944 \
-  --ws-external \
   --prometheus-external \
-  --rpc-external \
-  --rpc-cors all \
   $PARACHAIN_ROLE_ARGS \
   $PARACHAIN_EXTRA_ARGS \
   -- \
@@ -60,9 +57,6 @@ $WORK_PATH/khala-node \
   --prometheus-port 9616 \
   --rpc-port 9934 \
   --ws-port 9945 \
-  --ws-external \
   --prometheus-external \
-  --rpc-external \
-  --rpc-cors all \
   $RELAYCHAIN_ROLE_ARGS \
   $RELAYCHAIN_EXTRA_ARGS
