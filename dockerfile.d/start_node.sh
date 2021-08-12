@@ -24,12 +24,12 @@ case ${NODE_ROLE} in
     RELAYCHAIN_ROLE_ARGS=""
     ;;
   "COLLATOR")
-    PARACHAIN_ROLE_ARGS="--collator"
+    PARACHAIN_ROLE_ARGS="--collator --rpc-external --rpc-methods Unsafe"
     RELAYCHAIN_ROLE_ARGS=""
     ;;
   "MINER")
-    PARACHAIN_ROLE_ARGS="--pruning archive --ws-external --rpc-external --rpc-cors all --rpc-methods Unsafe"
-    RELAYCHAIN_ROLE_ARGS="--pruning archive --ws-external --rpc-external --rpc-cors all --rpc-methods Unsafe"
+    PARACHAIN_ROLE_ARGS="--pruning archive --rpc-external --rpc-methods Unsafe"
+    RELAYCHAIN_ROLE_ARGS="--pruning archive --rpc-external --rpc-methods Unsafe"
     ;;
   *)
     echo "Unknown NODE_ROLE ${NODE_ROLE}"
@@ -49,6 +49,8 @@ $WORK_PATH/khala-node \
   --rpc-port 9933 \
   --ws-port 9944 \
   --prometheus-external \
+  --ws-external \
+  --rpc-cors all \
   $PARACHAIN_ROLE_ARGS \
   $PARACHAIN_EXTRA_ARGS \
   -- \
@@ -58,5 +60,7 @@ $WORK_PATH/khala-node \
   --rpc-port 9934 \
   --ws-port 9945 \
   --prometheus-external \
+  --ws-external \
+  --rpc-cors all \
   $RELAYCHAIN_ROLE_ARGS \
   $RELAYCHAIN_EXTRA_ARGS
