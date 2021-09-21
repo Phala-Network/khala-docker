@@ -6,6 +6,9 @@ DATA_PATH="$HOME/data"
 NODE_NAME="${NODE_NAME:-"khala-node"}"
 NODE_ROLE="${NODE_ROLE:-""}"
 
+PARACHAIN_PORT="${PARACHAIN_PORT:-"30333"}"
+RELAYCHAIN_PORT="${RELAYCHAIN_PORT:-"30334"}"
+
 PARACHAIN="khala"
 RELAYCHAIN="kusama"
 
@@ -44,7 +47,7 @@ $WORK_PATH/khala-node \
   --chain $PARACHAIN \
   --base-path $DATA_PATH \
   --name $NODE_NAME \
-  --port 30333 \
+  --port $PARACHAIN_PORT \
   --prometheus-port 9615 \
   --rpc-port 9933 \
   --ws-port 9944 \
@@ -55,7 +58,7 @@ $WORK_PATH/khala-node \
   $PARACHAIN_EXTRA_ARGS \
   -- \
   --chain $RELAYCHAIN \
-  --port 30334 \
+  --port $RELAYCHAIN_PORT \
   --prometheus-port 9616 \
   --rpc-port 9934 \
   --ws-port 9945 \
