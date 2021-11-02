@@ -34,6 +34,8 @@ RUN apt-get update && \
     apt-get install -y apt-utils apt-transport-https software-properties-common readline-common curl vim wget gnupg gnupg2 gnupg-agent ca-certificates tini
 
 COPY --from=builder /root/khala-node .
+# Can binary be exposed in the user directory, because it needs permission when starting docker when it is placed in the /root directory, and an error will be reported when starting
+COPY --from=builder /root/khala-node /usr/local/bin/khala-node
 ADD dockerfile.d/start_node.sh ./start_node.sh
 
 ENV RUST_LOG="info"
