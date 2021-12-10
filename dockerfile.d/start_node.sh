@@ -1,6 +1,5 @@
 #!/bin/bash
 
-WORK_PATH=$(dirname $(readlink -f "$0"))
 DATA_PATH="$HOME/data"
 
 NODE_NAME="${NODE_NAME:-"khala-node"}"
@@ -43,7 +42,7 @@ esac
 
 echo "Starting Khala node as role '${NODE_ROLE}' with extra parachain args '${PARACHAIN_EXTRA_ARGS}' extra relaychain args '${RELAYCHAIN_EXTRA_ARGS}'"
 
-$WORK_PATH/khala-node \
+/usr/local/bin/khala-node \
   --chain $PARACHAIN \
   --base-path $DATA_PATH \
   --name $NODE_NAME \

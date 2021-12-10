@@ -1,7 +1,7 @@
 FROM ubuntu:20.04 AS builder
 
 ARG DEBIAN_FRONTEND='noninteractive'
-ARG RUST_TOOLCHAIN='nightly-2021-09-01'
+ARG RUST_TOOLCHAIN='nightly-2021-11-11'
 ARG PHALA_GIT_REPO='https://github.com/Phala-Network/khala-parachain.git'
 ARG PHALA_GIT_TAG='master'
 
@@ -33,8 +33,6 @@ WORKDIR /root
 RUN apt-get update && \
     apt-get install -y apt-utils apt-transport-https software-properties-common readline-common curl vim wget gnupg gnupg2 gnupg-agent ca-certificates tini
 
-COPY --from=builder /root/khala-node .
-# Can binary be exposed in the user directory, because it needs permission when starting docker when it is placed in the /root directory, and an error will be reported when starting
 COPY --from=builder /root/khala-node /usr/local/bin/khala-node
 ADD dockerfile.d/start_node.sh ./start_node.sh
 
@@ -54,6 +52,4 @@ EXPOSE 9945
 EXPOSE 30333
 EXPOSE 30334
 
-ENTRYPOINT ["/usr/bin/tini", "--"]
-
-CMD ["/bin/bash", "./start_node.sh"]
+ENTRYPOINT ["/usr/local/bin/khala-node"]
