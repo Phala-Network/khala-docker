@@ -52,4 +52,6 @@ EXPOSE 9945
 EXPOSE 30333
 EXPOSE 30334
 
-ENTRYPOINT ["/usr/local/bin/khala-node"]
+ENTRYPOINT ["/usr/bin/tini", "--"]
+
+CMD ["/bin/bash", "./start_node.sh"]
