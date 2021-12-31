@@ -16,7 +16,7 @@ RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --de
 RUN echo "Compiling Khala from $PHALA_GIT_REPO:$PHALA_GIT_TAG..." && \
     git clone --depth 1 --recurse-submodules --shallow-submodules -j 8 -b ${PHALA_GIT_TAG} ${PHALA_GIT_REPO} khala-parachain && \
     cd khala-parachain && \
-    PATH="$HOME/.cargo/bin:$PATH" cargo build --release && \
+    PATH="$HOME/.cargo/bin:$PATH" cargo build --profile production && \
     cp ./target/release/khala-node /root && \
     PATH="$HOME/.cargo/bin:$PATH" cargo clean && \
     rm -rf /root/.cargo/registry && \
