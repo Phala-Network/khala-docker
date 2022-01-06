@@ -22,7 +22,7 @@ case ${NODE_ROLE} in
     RELAYCHAIN_ROLE_ARGS=""
     ;;
   "ARCHIVE")
-    PARACHAIN_ROLE_ARGS="--pruning archive"
+    PARACHAIN_ROLE_ARGS="--pruning archive --db-cache 2048"
     RELAYCHAIN_ROLE_ARGS=""
     ;;
   "COLLATOR")
@@ -30,8 +30,8 @@ case ${NODE_ROLE} in
     RELAYCHAIN_ROLE_ARGS=""
     ;;
   "MINER")
-    PARACHAIN_ROLE_ARGS="--pruning archive --rpc-external --rpc-methods Unsafe"
-    RELAYCHAIN_ROLE_ARGS="--pruning archive --rpc-external --rpc-methods Unsafe"
+    PARACHAIN_ROLE_ARGS="--pruning archive --rpc-external --rpc-methods Unsafe --db-cache 2048"
+    RELAYCHAIN_ROLE_ARGS="--pruning archive --rpc-external --rpc-methods Unsafe --db-cache 2048"
     ;;
   *)
     echo "Unknown NODE_ROLE ${NODE_ROLE}"
