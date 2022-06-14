@@ -37,8 +37,11 @@ COPY --from=builder /root/khala-node /usr/local/bin/khala-node
 ADD dockerfile.d/start_node.sh ./start_node.sh
 
 ENV RUST_LOG="info"
-ENV NODE_NAME=""
-ENV NODE_ROLE=""
+ENV NODE_NAME="phala-node"
+ENV NODE_ROLE="ARCHIVE"
+
+ENV PARACHAIN="phala"
+ENV RELAYCHAIN="polkadot"
 
 ENV PARACHAIN_EXTRA_ARGS=""
 ENV RELAYCHAIN_EXTRA_ARGS=""

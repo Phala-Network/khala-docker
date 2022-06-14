@@ -8,8 +8,8 @@ NODE_ROLE="${NODE_ROLE:-""}"
 PARACHAIN_PORT="${PARACHAIN_PORT:-"30333"}"
 RELAYCHAIN_PORT="${RELAYCHAIN_PORT:-"30334"}"
 
-PARACHAIN="khala"
-RELAYCHAIN="kusama"
+PARACHAIN="${PARACHAIN:-"khala"}"
+RELAYCHAIN="${RELAYCHAIN:-"kusama"}"
 
 case ${NODE_ROLE} in
   "")
@@ -22,7 +22,7 @@ case ${NODE_ROLE} in
     RELAYCHAIN_ROLE_ARGS=""
     ;;
   "ARCHIVE")
-    PARACHAIN_ROLE_ARGS="--pruning archive --db-cache 2048"
+    PARACHAIN_ROLE_ARGS="--pruning archive --rpc-external"
     RELAYCHAIN_ROLE_ARGS=""
     ;;
   "COLLATOR")
@@ -30,8 +30,8 @@ case ${NODE_ROLE} in
     RELAYCHAIN_ROLE_ARGS=""
     ;;
   "MINER")
-    PARACHAIN_ROLE_ARGS="--pruning archive --rpc-external --rpc-methods Unsafe --db-cache 2048"
-    RELAYCHAIN_ROLE_ARGS="--pruning archive --rpc-external --rpc-methods Unsafe --db-cache 2048"
+    PARACHAIN_ROLE_ARGS="--pruning archive --rpc-external --rpc-methods Unsafe"
+    RELAYCHAIN_ROLE_ARGS="--pruning archive --rpc-external --rpc-methods Unsafe"
     ;;
   *)
     echo "Unknown NODE_ROLE ${NODE_ROLE}"
