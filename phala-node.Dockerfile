@@ -1,7 +1,7 @@
 FROM ubuntu:20.04 AS builder
 
 ARG DEBIAN_FRONTEND='noninteractive'
-ARG RUST_TOOLCHAIN='nightly-2022-04-01'
+ARG RUST_TOOLCHAIN='nightly-2022-07-11'
 ARG PHALA_GIT_REPO='https://github.com/Phala-Network/khala-parachain.git'
 ARG PHALA_GIT_TAG='master'
 

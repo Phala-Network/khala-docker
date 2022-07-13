@@ -26,12 +26,12 @@ case ${NODE_ROLE} in
     RELAYCHAIN_ROLE_ARGS=""
     ;;
   "COLLATOR")
-    PARACHAIN_ROLE_ARGS="--collator --rpc-external --rpc-methods Unsafe"
+    PARACHAIN_ROLE_ARGS="--collator --pruning archive --rpc-external --rpc-methods unsafe"
     RELAYCHAIN_ROLE_ARGS=""
     ;;
   "MINER")
-    PARACHAIN_ROLE_ARGS="--pruning archive --rpc-external --rpc-methods Unsafe"
-    RELAYCHAIN_ROLE_ARGS="--pruning archive --rpc-external --rpc-methods Unsafe"
+    PARACHAIN_ROLE_ARGS="--pruning archive --rpc-external --rpc-methods unsafe"
+    RELAYCHAIN_ROLE_ARGS="--pruning archive --rpc-external --rpc-methods unsafe"
     ;;
   *)
     echo "Unknown NODE_ROLE ${NODE_ROLE}"
@@ -53,6 +53,7 @@ echo "Starting Khala node as role '${NODE_ROLE}' with extra parachain args '${PA
   --prometheus-external \
   --ws-external \
   --rpc-cors all \
+  --no-hardware-benchmarks \
   $PARACHAIN_ROLE_ARGS \
   $PARACHAIN_EXTRA_ARGS \
   -- \
@@ -64,5 +65,6 @@ echo "Starting Khala node as role '${NODE_ROLE}' with extra parachain args '${PA
   --prometheus-external \
   --ws-external \
   --rpc-cors all \
+  --no-hardware-benchmarks \
   $RELAYCHAIN_ROLE_ARGS \
   $RELAYCHAIN_EXTRA_ARGS

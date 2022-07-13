@@ -1,7 +1,7 @@
 FROM ubuntu:20.04 AS builder
 
 ARG DEBIAN_FRONTEND='noninteractive'
-ARG RUST_TOOLCHAIN='nightly-2022-04-01'
+ARG RUST_TOOLCHAIN='nightly-2022-07-11'
 ARG PHALA_GIT_REPO='https://github.com/Phala-Network/khala-parachain.git'
 ARG PHALA_GIT_TAG='master'
 
@@ -37,8 +37,11 @@ COPY --from=builder /root/khala-node /usr/local/bin/khala-node
 ADD dockerfile.d/start_node.sh ./start_node.sh
 
 ENV RUST_LOG="info"
-ENV NODE_NAME=""
+ENV NODE_NAME="khala-node"
 ENV NODE_ROLE=""
+
+ENV PARACHAIN="khala"
+ENV RELAYCHAIN="kusama"
 
 ENV PARACHAIN_EXTRA_ARGS=""
 ENV RELAYCHAIN_EXTRA_ARGS=""
