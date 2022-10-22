@@ -8,6 +8,9 @@ NODE_ROLE="${NODE_ROLE:-""}"
 PARACHAIN_PORT="${PARACHAIN_PORT:-"30333"}"
 RELAYCHAIN_PORT="${RELAYCHAIN_PORT:-"30334"}"
 
+PARACHAIN_DB="${PARACHAIN_DB:-"rocksdb"}"
+RELAYCHAIN_DB="${RELAYCHAIN_DB:-"rocksdb"}"
+
 PARACHAIN="${PARACHAIN:-"khala"}"
 RELAYCHAIN="${RELAYCHAIN:-"kusama"}"
 
@@ -45,6 +48,7 @@ echo "Starting Khala node as role '${NODE_ROLE}' with extra parachain args '${PA
 /usr/local/bin/khala-node \
   --chain $PARACHAIN \
   --base-path $DATA_PATH \
+  --database $PARACHAIN_DB \
   --name $NODE_NAME \
   --port $PARACHAIN_PORT \
   --prometheus-port 9615 \
@@ -58,6 +62,7 @@ echo "Starting Khala node as role '${NODE_ROLE}' with extra parachain args '${PA
   $PARACHAIN_EXTRA_ARGS \
   -- \
   --chain $RELAYCHAIN \
+  --database $RELAYCHAIN_DB \
   --port $RELAYCHAIN_PORT \
   --prometheus-port 9616 \
   --rpc-port 9934 \
