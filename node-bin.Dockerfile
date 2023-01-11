@@ -1,6 +1,6 @@
-FROM ubuntu:20.04 AS builder
+FROM ubuntu:22.04 AS builder
 
-ARG RUST_TOOLCHAIN='nightly-2022-09-08'
+ARG RUST_TOOLCHAIN='nightly-2022-10-25'
 ARG CARGO_PROFILE='production'
 ARG PHALA_GIT_REPO='https://github.com/Phala-Network/khala-parachain.git'
 ARG PHALA_GIT_TAG='main'
@@ -24,7 +24,7 @@ RUN echo "Compiling Khala from $PHALA_GIT_REPO:$PHALA_GIT_TAG..." && \
 
 # ====
 
-FROM ubuntu:20.04
+FROM ubuntu:22.04
 
 WORKDIR /root
 

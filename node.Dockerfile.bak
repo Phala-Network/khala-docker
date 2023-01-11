@@ -1,4 +1,4 @@
-FROM ubuntu:20.04 AS builder
+FROM ubuntu:22.04 AS builder
 
 ARG RUST_TOOLCHAIN='nightly-2022-09-08'
 ARG CARGO_PROFILE='production'
