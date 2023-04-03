@@ -2,29 +2,33 @@
 # frozen_string_literal: true
 
 BUILD_ONLY = false
-GIT_TAG = "v0.1.21-dev.1"
+GIT_TAG = "main"
 
-COMMON_TAG = GIT_TAG
+COMMON_TAG = "v0.1.23-dev.4" # GIT_TAG
 
 KHALA_NODE_BIN_DOCKER_REPO = "khala-node-bin"
 KHALA_NODE_BIN_DOCKER_TAG = COMMON_TAG
-KHALA_NODE_BIN_GIT_TAG = GIT_TAG
+KHALA_NODE_BIN_GIT_TAG = "polkadot-v0.9.40" # GIT_TAG
 
 PHALA_NODE_BIN_DOCKER_REPO = "phala-node-bin"
 PHALA_NODE_BIN_DOCKER_TAG = COMMON_TAG
-PHALA_NODE_BIN_GIT_TAG = GIT_TAG
+PHALA_NODE_BIN_GIT_TAG = "polkadot-v0.9.40" # GIT_TAG
 
-KHALA_NODE_WITH_LAUNCHER_DOCKER_REPO = "khala-node"
-KHALA_NODE_WITH_LAUNCHER_DOCKER_TAG = PHALA_NODE_BIN_DOCKER_TAG
+# Old one
+KHALA_NODE_DOCKER_REPO = "khala-node"
+KHALA_NODE_DOCKER_TAG = KHALA_NODE_BIN_DOCKER_TAG
 
-PHALA_NODE_WITH_LAUNCHER_DOCKER_REPO = "phala-node"
+KHALA_NODE_WITH_LAUNCHER_DOCKER_REPO = "khala-node-with-launcher"
+KHALA_NODE_WITH_LAUNCHER_DOCKER_TAG = KHALA_NODE_BIN_DOCKER_TAG
+
+PHALA_NODE_WITH_LAUNCHER_DOCKER_REPO = "phala-node-with-launcher"
 PHALA_NODE_WITH_LAUNCHER_DOCKER_TAG = PHALA_NODE_BIN_DOCKER_TAG
 
 REGISTRIES = [
   "jasl123",
   # "phalanetwork",
   # "swr.cn-east-3.myhuaweicloud.com/phala",
-  # "docker.pkg.github.com/phala-network/khala-docker"
+  # "ghcr.io/phala-network/khala-node"
 ]
 
 require "open3"
@@ -48,7 +52,9 @@ REGISTRIES.each do |registry|
     "docker build --build-arg PHALA_GIT_TAG=#{KHALA_NODE_BIN_GIT_TAG} -f node-bin.Dockerfile -t #{registry}/#{KHALA_NODE_BIN_DOCKER_REPO}:#{KHALA_NODE_BIN_DOCKER_TAG} .",
     "docker build --build-arg PHALA_GIT_TAG=#{KHALA_NODE_BIN_GIT_TAG} -f node-bin.Dockerfile -t #{registry}/#{KHALA_NODE_BIN_DOCKER_REPO} .",
     "docker build --build-arg NODE_BIN_IMAGE=#{registry}/#{KHALA_NODE_BIN_DOCKER_REPO}:#{KHALA_NODE_BIN_DOCKER_TAG} -f khala-node-with-launcher.Dockerfile -t #{registry}/#{KHALA_NODE_WITH_LAUNCHER_DOCKER_REPO}:#{KHALA_NODE_BIN_DOCKER_TAG} .",
-    "docker build --build-arg NODE_BIN_IMAGE=#{registry}/#{KHALA_NODE_BIN_DOCKER_REPO}:#{KHALA_NODE_BIN_DOCKER_TAG} -f khala-node-with-launcher.Dockerfile -t #{registry}/#{KHALA_NODE_WITH_LAUNCHER_DOCKER_REPO} ."
+    "docker build --build-arg NODE_BIN_IMAGE=#{registry}/#{KHALA_NODE_BIN_DOCKER_REPO}:#{KHALA_NODE_BIN_DOCKER_TAG} -f khala-node-with-launcher.Dockerfile -t #{registry}/#{KHALA_NODE_WITH_LAUNCHER_DOCKER_REPO} .",
+    "docker build --build-arg NODE_BIN_IMAGE=#{registry}/#{KHALA_NODE_BIN_DOCKER_REPO}:#{KHALA_NODE_BIN_DOCKER_TAG} -f khala-node.Dockerfile -t #{registry}/#{KHALA_NODE_DOCKER_REPO}:#{KHALA_NODE_BIN_DOCKER_TAG} .",
+    "docker build --build-arg NODE_BIN_IMAGE=#{registry}/#{KHALA_NODE_BIN_DOCKER_REPO}:#{KHALA_NODE_BIN_DOCKER_TAG} -f khala-node.Dockerfile -t #{registry}/#{KHALA_NODE_DOCKER_REPO} ."
   ].each do |cmd|
     puts cmd
     run cmd
@@ -62,7 +68,9 @@ unless BUILD_ONLY
       "docker push #{registry}/#{KHALA_NODE_BIN_DOCKER_REPO}:#{KHALA_NODE_BIN_DOCKER_TAG}",
       "docker push #{registry}/#{KHALA_NODE_BIN_DOCKER_REPO}",
       "docker push #{registry}/#{KHALA_NODE_WITH_LAUNCHER_DOCKER_REPO}:#{KHALA_NODE_WITH_LAUNCHER_DOCKER_TAG}",
-      "docker push #{registry}/#{KHALA_NODE_WITH_LAUNCHER_DOCKER_REPO}"
+      "docker push #{registry}/#{KHALA_NODE_WITH_LAUNCHER_DOCKER_REPO}",
+      "docker push #{registry}/#{KHALA_NODE_DOCKER_REPO}:#{KHALA_NODE_DOCKER_TAG}",
+      "docker push #{registry}/#{KHALA_NODE_DOCKER_REPO}"
     ].each do |cmd|
       puts cmd
       run cmd
@@ -70,30 +78,30 @@ unless BUILD_ONLY
   end
 end
 
-# # Build Phala-Node
-# REGISTRIES.each do |registry|
-#   [
-#     "docker build --build-arg PHALA_GIT_TAG=#{PHALA_NODE_BIN_GIT_TAG} -f node-bin.Dockerfile -t #{registry}/#{PHALA_NODE_BIN_DOCKER_REPO}:#{PHALA_NODE_BIN_DOCKER_TAG} .",
-#     "docker build --build-arg PHALA_GIT_TAG=#{PHALA_NODE_BIN_GIT_TAG} -f node-bin.Dockerfile -t #{registry}/#{PHALA_NODE_BIN_DOCKER_REPO} .",
-#     "docker build --build-arg NODE_BIN_IMAGE=#{registry}/#{PHALA_NODE_BIN_DOCKER_REPO}:#{PHALA_NODE_BIN_DOCKER_TAG} -f phala-node-with-launcher.Dockerfile -t #{registry}/#{PHALA_NODE_WITH_LAUNCHER_DOCKER_REPO}:#{PHALA_NODE_BIN_DOCKER_TAG} .",
-#     "docker build --build-arg NODE_BIN_IMAGE=#{registry}/#{PHALA_NODE_BIN_DOCKER_REPO}:#{PHALA_NODE_BIN_DOCKER_TAG} -f phala-node-with-launcher.Dockerfile -t #{registry}/#{PHALA_NODE_WITH_LAUNCHER_DOCKER_REPO} ."
-#   ].each do |cmd|
-#     puts cmd
-#     run cmd
-#   end
-# end
+# Build Phala-Node
+REGISTRIES.each do |registry|
+  [
+    "docker build --build-arg PHALA_GIT_TAG=#{PHALA_NODE_BIN_GIT_TAG} -f node-bin.Dockerfile -t #{registry}/#{PHALA_NODE_BIN_DOCKER_REPO}:#{PHALA_NODE_BIN_DOCKER_TAG} .",
+    "docker build --build-arg PHALA_GIT_TAG=#{PHALA_NODE_BIN_GIT_TAG} -f node-bin.Dockerfile -t #{registry}/#{PHALA_NODE_BIN_DOCKER_REPO} .",
+    "docker build --build-arg NODE_BIN_IMAGE=#{registry}/#{PHALA_NODE_BIN_DOCKER_REPO}:#{PHALA_NODE_BIN_DOCKER_TAG} -f phala-node-with-launcher.Dockerfile -t #{registry}/#{PHALA_NODE_WITH_LAUNCHER_DOCKER_REPO}:#{PHALA_NODE_BIN_DOCKER_TAG} .",
+    "docker build --build-arg NODE_BIN_IMAGE=#{registry}/#{PHALA_NODE_BIN_DOCKER_REPO}:#{PHALA_NODE_BIN_DOCKER_TAG} -f phala-node-with-launcher.Dockerfile -t #{registry}/#{PHALA_NODE_WITH_LAUNCHER_DOCKER_REPO} ."
+  ].each do |cmd|
+    puts cmd
+    run cmd
+  end
+end
 
-# unless BUILD_ONLY
-#   # Push Phala-Node
-#   REGISTRIES.each do |registry|
-#     [
-#       "docker push #{registry}/#{PHALA_NODE_BIN_DOCKER_REPO}:#{PHALA_NODE_BIN_DOCKER_TAG}",
-#       "docker push #{registry}/#{PHALA_NODE_BIN_DOCKER_REPO}",
-#       "docker push #{registry}/#{PHALA_NODE_WITH_LAUNCHER_DOCKER_REPO}:#{PHALA_NODE_WITH_LAUNCHER_DOCKER_TAG}",
-#       "docker push #{registry}/#{PHALA_NODE_WITH_LAUNCHER_DOCKER_REPO}"
-#     ].each do |cmd|
-#       puts cmd
-#       run cmd
-#     end
-#   end
-# end
+unless BUILD_ONLY
+  # Push Phala-Node
+  REGISTRIES.each do |registry|
+    [
+      "docker push #{registry}/#{PHALA_NODE_BIN_DOCKER_REPO}:#{PHALA_NODE_BIN_DOCKER_TAG}",
+      "docker push #{registry}/#{PHALA_NODE_BIN_DOCKER_REPO}",
+      "docker push #{registry}/#{PHALA_NODE_WITH_LAUNCHER_DOCKER_REPO}:#{PHALA_NODE_WITH_LAUNCHER_DOCKER_TAG}",
+      "docker push #{registry}/#{PHALA_NODE_WITH_LAUNCHER_DOCKER_REPO}"
+    ].each do |cmd|
+      puts cmd
+      run cmd
+    end
+  end
+end
