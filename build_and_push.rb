@@ -4,7 +4,7 @@
 BUILD_ONLY = false
 GIT_TAG = "main"
 
-COMMON_TAG = "v0.1.23-dev.4" # GIT_TAG
+COMMON_TAG = "v0.1.23-dev.5" # GIT_TAG
 
 KHALA_NODE_BIN_DOCKER_REPO = "khala-node-bin"
 KHALA_NODE_BIN_DOCKER_TAG = COMMON_TAG

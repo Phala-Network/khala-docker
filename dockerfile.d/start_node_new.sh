@@ -5,14 +5,23 @@ DATA_PATH="$HOME/data"
 NODE_NAME="${NODE_NAME:-"khala-node"}"
 NODE_ROLE="${NODE_ROLE:-""}"
 
-PARACHAIN_PORT="${PARACHAIN_PORT:-"30333"}"
-RELAYCHAIN_PORT="${RELAYCHAIN_PORT:-"30334"}"
+PARACHAIN="${PARACHAIN:-"phala"}"
+RELAYCHAIN="${RELAYCHAIN:-"polkadot"}"
 
 PARACHAIN_DB="${PARACHAIN_DB:-"paritydb"}"
 RELAYCHAIN_DB="${RELAYCHAIN_DB:-"paritydb"}"
 
-PARACHAIN="${PARACHAIN:-"phala"}"
-RELAYCHAIN="${RELAYCHAIN:-"polkadot"}"
+PARACHAIN_LIBP2P_PORT="${PARACHAIN_PORT:-"30333"}"
+RELAYCHAIN_LIBP2P_PORT="${RELAYCHAIN_PORT:-"30334"}"
+
+PARACHAIN_PROMETHEUS_PORT="${PARACHAIN_PROMETHEUS_PORT:-"9615"}"
+RELAYCHAIN_PROMETHEUS_PORT="${RELAYCHAIN_PROMETHEUS_PORT:-"9616"}"
+
+PARACHAIN_HTTP_RPC_PORT="${PARACHAIN_HTTP_RPC_PORT:-"9933"}"
+RELAYCHAIN_HTTP_RPC_PORT="${RELAYCHAIN_HTTP_RPC_PORT:-"9934"}"
+
+PARACHAIN_WS_RPC_PORT="${PARACHAIN_WS_RPC_PORT:-"9944"}"
+RELAYCHAIN_WS_RPC_PORT="${RELAYCHAIN_WS_RPC_PORT:-"9945"}"
 
 case ${NODE_ROLE} in
   "")
@@ -50,10 +59,10 @@ echo "Starting Khala node as role '${NODE_ROLE}' with extra parachain args '${PA
   --base-path $DATA_PATH \
   --database $PARACHAIN_DB \
   --name $NODE_NAME \
-  --port $PARACHAIN_PORT \
-  --prometheus-port 9615 \
-  --rpc-port 9933 \
-  --ws-port 9944 \
+  --port $PARACHAIN_LIBP2P_PORT \
+  --prometheus-port $PARACHAIN_PROMETHEUS_PORT \
+  --rpc-port $PARACHAIN_HTTP_RPC_PORT \
+  --ws-port $PARACHAIN_WS_RPC_PORT \
   --prometheus-external \
   --ws-external \
   --rpc-cors all \
@@ -63,10 +72,10 @@ echo "Starting Khala node as role '${NODE_ROLE}' with extra parachain args '${PA
   -- \
   --chain $RELAYCHAIN \
   --database $RELAYCHAIN_DB \
-  --port $RELAYCHAIN_PORT \
-  --prometheus-port 9616 \
-  --rpc-port 9934 \
-  --ws-port 9945 \
+  --port $RELAYCHAIN_LIBP2P_PORT \
+  --prometheus-port $RELAYCHAIN_PROMETHEUS_PORT \
+  --rpc-port $RELAYCHAIN_HTTP_RPC_PORT \
+  --ws-port $RELAYCHAIN_WS_RPC_PORT \
   --prometheus-external \
   --ws-external \
   --rpc-cors all \
