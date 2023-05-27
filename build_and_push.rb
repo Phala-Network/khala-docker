@@ -2,7 +2,9 @@
 # frozen_string_literal: true
 
 BUILD_ONLY = false
-GIT_TAG = "v0.1.24"
+
+GIT_REPO = "https://github.com/Phala-Network/khala-parachain.git"
+GIT_TAG = "v0.1.25-dev.1"
 
 COMMON_TAG = GIT_TAG
 
@@ -30,7 +32,7 @@ PHALA_NODE_WITH_LAUNCHER_DOCKER_TAG = PHALA_NODE_BIN_DOCKER_TAG
 
 REGISTRIES = [
   "jasl123",
-  "phalanetwork",
+  # "phalanetwork",
   # "swr.cn-east-3.myhuaweicloud.com/phala",
   # "ghcr.io/phala-network/khala-node"
 ]
@@ -53,8 +55,8 @@ end
 # Build Khala-Node
 REGISTRIES.each do |registry|
   [
-    "docker build --build-arg PHALA_GIT_TAG=#{KHALA_NODE_BIN_GIT_TAG} -f node-bin.Dockerfile -t #{registry}/#{KHALA_NODE_BIN_DOCKER_REPO}:#{KHALA_NODE_BIN_DOCKER_TAG} .",
-    "docker build --build-arg PHALA_GIT_TAG=#{KHALA_NODE_BIN_GIT_TAG} -f node-bin.Dockerfile -t #{registry}/#{KHALA_NODE_BIN_DOCKER_REPO} .",
+    "docker build --build-arg PHALA_GIT_REPO=#{GIT_REPO} PHALA_GIT_TAG=#{KHALA_NODE_BIN_GIT_TAG} -f node-bin.Dockerfile -t #{registry}/#{KHALA_NODE_BIN_DOCKER_REPO}:#{KHALA_NODE_BIN_DOCKER_TAG} .",
+    "docker build --build-arg PHALA_GIT_REPO=#{GIT_REPO} PHALA_GIT_TAG=#{KHALA_NODE_BIN_GIT_TAG} -f node-bin.Dockerfile -t #{registry}/#{KHALA_NODE_BIN_DOCKER_REPO} .",
     "docker build --build-arg NODE_BIN_IMAGE=#{registry}/#{KHALA_NODE_BIN_DOCKER_REPO}:#{KHALA_NODE_BIN_DOCKER_TAG} -f khala-node-with-launcher.Dockerfile -t #{registry}/#{KHALA_NODE_WITH_LAUNCHER_DOCKER_REPO}:#{KHALA_NODE_BIN_DOCKER_TAG} .",
     "docker build --build-arg NODE_BIN_IMAGE=#{registry}/#{KHALA_NODE_BIN_DOCKER_REPO}:#{KHALA_NODE_BIN_DOCKER_TAG} -f khala-node-with-launcher.Dockerfile -t #{registry}/#{KHALA_NODE_WITH_LAUNCHER_DOCKER_REPO} .",
     "docker build --build-arg NODE_BIN_IMAGE=#{registry}/#{KHALA_NODE_BIN_DOCKER_REPO}:#{KHALA_NODE_BIN_DOCKER_TAG} -f khala-node.Dockerfile -t #{registry}/#{KHALA_NODE_DOCKER_REPO}:#{KHALA_NODE_BIN_DOCKER_TAG} .",
@@ -85,8 +87,8 @@ end
 # Build Phala-Node
 REGISTRIES.each do |registry|
   [
-    "docker build --build-arg PHALA_GIT_TAG=#{PHALA_NODE_BIN_GIT_TAG} -f node-bin.Dockerfile -t #{registry}/#{PHALA_NODE_BIN_DOCKER_REPO}:#{PHALA_NODE_BIN_DOCKER_TAG} .",
-    "docker build --build-arg PHALA_GIT_TAG=#{PHALA_NODE_BIN_GIT_TAG} -f node-bin.Dockerfile -t #{registry}/#{PHALA_NODE_BIN_DOCKER_REPO} .",
+    "docker build --build-arg PHALA_GIT_REPO=#{GIT_REPO} PHALA_GIT_TAG=#{PHALA_NODE_BIN_GIT_TAG} -f node-bin.Dockerfile -t #{registry}/#{PHALA_NODE_BIN_DOCKER_REPO}:#{PHALA_NODE_BIN_DOCKER_TAG} .",
+    "docker build --build-arg PHALA_GIT_REPO=#{GIT_REPO} PHALA_GIT_TAG=#{PHALA_NODE_BIN_GIT_TAG} -f node-bin.Dockerfile -t #{registry}/#{PHALA_NODE_BIN_DOCKER_REPO} .",
     "docker build --build-arg NODE_BIN_IMAGE=#{registry}/#{PHALA_NODE_BIN_DOCKER_REPO}:#{PHALA_NODE_BIN_DOCKER_TAG} -f phala-node-with-launcher.Dockerfile -t #{registry}/#{PHALA_NODE_WITH_LAUNCHER_DOCKER_REPO}:#{PHALA_NODE_BIN_DOCKER_TAG} .",
     "docker build --build-arg NODE_BIN_IMAGE=#{registry}/#{PHALA_NODE_BIN_DOCKER_REPO}:#{PHALA_NODE_BIN_DOCKER_TAG} -f phala-node-with-launcher.Dockerfile -t #{registry}/#{PHALA_NODE_WITH_LAUNCHER_DOCKER_REPO} .",
     "docker build --build-arg NODE_BIN_IMAGE=#{registry}/#{PHALA_NODE_BIN_DOCKER_REPO}:#{PHALA_NODE_BIN_DOCKER_TAG} -f phala-node.Dockerfile -t #{registry}/#{PHALA_NODE_DOCKER_REPO}:#{PHALA_NODE_BIN_DOCKER_TAG} .",
