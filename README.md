@@ -69,8 +69,10 @@ Force stop
 
 - Proxy and other Systemd relates configurations <https://docs.docker.com/config/daemon/systemd/>
 - Manage Docker as a non-root user (avoid `sudo`) <https://docs.docker.com/engine/install/linux-postinstall/>
-- Add `--restart=unless-stopped` to `docker run` to improve availability
 - You can use `docker create` instead of `docker run` for create the container but not run it immediately
+- Add `--restart=unless-stopped` to `docker run` to improve availability
+- Add `--ulimit memlock=8589934592:8589934592` and `--ulimit nofile=102400:102400` for better performance
+- Add `--log-driver local --log-opt max-size=300m --log-opt max-file=3` for limit logs' size
 
 ## License
 
