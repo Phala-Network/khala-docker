@@ -17,17 +17,14 @@ RELAYCHAIN_LIBP2P_PORT="${RELAYCHAIN_LIBP2P_PORT:-"30334"}"
 PARACHAIN_PROMETHEUS_PORT="${PARACHAIN_PROMETHEUS_PORT:-"9615"}"
 RELAYCHAIN_PROMETHEUS_PORT="${RELAYCHAIN_PROMETHEUS_PORT:-"9616"}"
 
-PARACHAIN_HTTP_RPC_PORT="${PARACHAIN_HTTP_RPC_PORT:-"9933"}"
-RELAYCHAIN_HTTP_RPC_PORT="${RELAYCHAIN_HTTP_RPC_PORT:-"9934"}"
-
-PARACHAIN_WS_RPC_PORT="${PARACHAIN_WS_RPC_PORT:-"9944"}"
-RELAYCHAIN_WS_RPC_PORT="${RELAYCHAIN_WS_RPC_PORT:-"9945"}"
+PARACHAIN_RPC_PORT="${PARACHAIN_RPC_PORT:-"9944"}"
+RELAYCHAIN_RPC_PORT="${RELAYCHAIN_RPC_PORT:-"9945"}"
 
 PARACHAIN_UNSAFE_RPC="--rpc-methods unsafe"
 RELAYCHAIN_UNSAFE_RPC="--rpc-methods unsafe"
 
-PARACHAIN_EXPOSE_ENDPOINTS="--rpc-external --ws-external --prometheus-external --rpc-cors all"
-RELAYCHAIN_EXPOSE_ENDPOINTS="--rpc-external --ws-external --prometheus-external --rpc-cors all"
+PARACHAIN_EXPOSE_ENDPOINTS="--rpc-external --prometheus-external --rpc-cors all"
+RELAYCHAIN_EXPOSE_ENDPOINTS="--rpc-external --prometheus-external --rpc-cors all"
 
 case ${NODE_ROLE} in
   "")
@@ -67,8 +64,7 @@ echo "Starting Khala node as role '${NODE_ROLE}' with extra parachain args '${PA
   --name $NODE_NAME \
   --port $PARACHAIN_LIBP2P_PORT \
   --prometheus-port $PARACHAIN_PROMETHEUS_PORT \
-  --rpc-port $PARACHAIN_HTTP_RPC_PORT \
-  --ws-port $PARACHAIN_WS_RPC_PORT \
+  --rpc-port $PARACHAIN_RPC_PORT \
   --no-hardware-benchmarks \
   $PARACHAIN_EXPOSE_ENDPOINTS \
   $PARACHAIN_UNSAFE_RPC \
@@ -79,8 +75,7 @@ echo "Starting Khala node as role '${NODE_ROLE}' with extra parachain args '${PA
   --database $RELAYCHAIN_DB \
   --port $RELAYCHAIN_LIBP2P_PORT \
   --prometheus-port $RELAYCHAIN_PROMETHEUS_PORT \
-  --rpc-port $RELAYCHAIN_HTTP_RPC_PORT \
-  --ws-port $RELAYCHAIN_WS_RPC_PORT \
+  --rpc-port $RELAYCHAIN_RPC_PORT \
   --no-hardware-benchmarks \
   $RELAYCHAIN_EXPOSE_ENDPOINTS \
   $RELAYCHAIN_UNSAFE_RPC \

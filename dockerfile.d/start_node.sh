@@ -25,16 +25,16 @@ case ${NODE_ROLE} in
     RELAYCHAIN_ROLE_ARGS=""
     ;;
   "ARCHIVE")
-    PARACHAIN_ROLE_ARGS="--pruning archive --rpc-external"
+    PARACHAIN_ROLE_ARGS="--blocks-pruning archive --state-pruning archive --rpc-external"
     RELAYCHAIN_ROLE_ARGS=""
     ;;
   "COLLATOR")
-    PARACHAIN_ROLE_ARGS="--collator --pruning archive --rpc-external --rpc-methods unsafe"
+    PARACHAIN_ROLE_ARGS="--collator --blocks-pruning archive --state-pruning archive --rpc-external --rpc-methods unsafe"
     RELAYCHAIN_ROLE_ARGS=""
     ;;
   "MINER")
-    PARACHAIN_ROLE_ARGS="--pruning archive --rpc-external --rpc-methods unsafe"
-    RELAYCHAIN_ROLE_ARGS="--pruning archive --rpc-external --rpc-methods unsafe"
+    PARACHAIN_ROLE_ARGS="--blocks-pruning archive --state-pruning archive --rpc-external --rpc-methods unsafe"
+    RELAYCHAIN_ROLE_ARGS="--blocks-pruning archive --state-pruning archive --rpc-external --rpc-methods unsafe"
     ;;
   *)
     echo "Unknown NODE_ROLE ${NODE_ROLE}"
@@ -52,10 +52,8 @@ echo "Starting Khala node as role '${NODE_ROLE}' with extra parachain args '${PA
   --name $NODE_NAME \
   --port $PARACHAIN_PORT \
   --prometheus-port 9615 \
-  --rpc-port 9933 \
-  --ws-port 9944 \
+  --rpc-port 9944 \
   --prometheus-external \
-  --ws-external \
   --rpc-cors all \
   --no-hardware-benchmarks \
   $PARACHAIN_ROLE_ARGS \
@@ -65,10 +63,8 @@ echo "Starting Khala node as role '${NODE_ROLE}' with extra parachain args '${PA
   --database $RELAYCHAIN_DB \
   --port $RELAYCHAIN_PORT \
   --prometheus-port 9616 \
-  --rpc-port 9934 \
-  --ws-port 9945 \
+  --rpc-port 9945 \
   --prometheus-external \
-  --ws-external \
   --rpc-cors all \
   --no-hardware-benchmarks \
   $RELAYCHAIN_ROLE_ARGS \
