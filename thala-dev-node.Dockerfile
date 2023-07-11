@@ -1,10 +1,10 @@
 FROM ubuntu:20.04 AS builder
 
 ARG DEBIAN_FRONTEND='noninteractive'
-ARG RUST_TOOLCHAIN='nightly-2023-02-03'
+ARG RUST_TOOLCHAIN='1.69.0'
 ARG PHALA_GIT_REPO='https://github.com/Phala-Network/khala-parachain.git'
 ARG PHALA_GIT_TAG='main'
-ARG POLKADOT_VERSION="v0.9.40"
+ARG POLKADOT_VERSION="v0.9.43"
 
 WORKDIR /root
 

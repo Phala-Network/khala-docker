@@ -1,6 +1,6 @@
 FROM ubuntu:22.04 AS builder
 
-ARG RUST_TOOLCHAIN='stable'
+ARG RUST_TOOLCHAIN='1.69.0'
 ARG CARGO_PROFILE='production'
 ARG PHALA_GIT_REPO='https://github.com/Phala-Network/khala-parachain.git'
 ARG PHALA_GIT_TAG='main'
