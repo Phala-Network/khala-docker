@@ -4,13 +4,13 @@
 BUILD_ONLY = false
 
 COMMON_CHAIN_NAME = "khala-pt3"
-COMMON_TAG = "22092001"
+COMMON_TAG = "23073101"
 
 DEV_NODE_DOCKER_REPO = "#{COMMON_CHAIN_NAME}-node"
 DEV_NODE_DOCKER_TAG = COMMON_TAG
 
 REGISTRIES = [
-  "jasl123",
+  # "jasl123",
   "phalanetwork",
   # "swr.cn-east-3.myhuaweicloud.com/phala",
 ]
