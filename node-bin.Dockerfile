@@ -1,6 +1,6 @@
 FROM ubuntu:22.04 AS builder
 
-ARG RUST_TOOLCHAIN='1.69.0'
+ARG RUST_TOOLCHAIN='1.73.0'
 ARG CARGO_PROFILE='production'
 ARG PHALA_GIT_REPO='https://github.com/Phala-Network/khala-parachain.git'
 ARG PHALA_GIT_TAG='main'
@@ -36,7 +36,6 @@ COPY --from=builder /root/khala-node /usr/local/bin
 ENV RUST_LOG="info"
 
 EXPOSE 9615 9616
-EXPOSE 9933 9934
 EXPOSE 9944 9945
 EXPOSE 30333 30334
 
